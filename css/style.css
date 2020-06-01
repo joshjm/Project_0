@@ -1,0 +1,16 @@
+.container{
+    margin: auto;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+#board{
+    width:100%;
+}
+
+.x, .o{
+    width: 20%;
+    position: absolute;
+    top:50px;
+}
+
