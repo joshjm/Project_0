@@ -29,8 +29,6 @@ const checkWinCondition = function (moveArray) {
     }
 }
 
-
-
 $(document).ready(function () {
     $('img').on('click', function (event) {
         if (xMoves.length+oMoves.length ==9){
@@ -64,7 +62,7 @@ $(document).ready(function () {
         xMoves = [];
         oMoves = [];
         gameOver = false;
-
+ 
     })
 
 });
