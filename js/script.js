@@ -16,7 +16,7 @@ const checkWinCondition = function (moveArray) {
         [1, 4, 7],
         [2, 5, 8],
         [3, 6, 9],
-        [1, 5, 9],
+        [1, 5, 9], 
         [3, 5, 7]
     ];
     for (let comboIndex = 0; comboIndex < combos.length; comboIndex++) {
@@ -36,7 +36,7 @@ $(document).ready(function () {
             alert("Cats Game.");
         }
         if (!gameOver) {
-            if (!xMoves.includes(this.id) && !oMoves.includes(this.id)) { // if square empty
+            if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
                 turn == 'x' ? xMoves.push(parseInt(this.id)) : oMoves.push(parseInt(this.id));
                 $(this).attr("src", `./img/${turn}.png`);
                 turn = turnFlip[turn];
