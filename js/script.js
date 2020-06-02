@@ -31,10 +31,7 @@ const checkWinCondition = function (moveArray) {
 
 $(document).ready(function () {
     $('img').on('click', function (event) {
-        if (xMoves.length+oMoves.length ==9){
-            gameOver=true;
-            alert("Cats Game.");
-        }
+
         if (!gameOver) {
             if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
                 turn == 'x' ? xMoves.push(parseInt(this.id)) : oMoves.push(parseInt(this.id));
@@ -51,6 +48,10 @@ $(document).ready(function () {
                 console.log("o wins");
                 gameOver = true;
 
+            }
+            if (xMoves.length+oMoves.length ==9){
+                gameOver=true;
+                alert("Cats Game.");
             }
         }
     });
