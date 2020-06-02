@@ -52,3 +52,10 @@ div.box img.whiteSquare{
     width: 100%;
     margin: 0;
 }
+.status{
+    display: inline;
+    margin: 0 10%;
+}
+footer{
+    text-align: center;
+}

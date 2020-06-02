@@ -4,9 +4,14 @@ var turnFlip = {
     'o': 'x',
 } // this is pretty cheeky. Magic number-ish. I guess cyclers arent that bad though
 var gameOver = false;
-
+var xWins = 0;
+var oWins = 0;
+var draws = 0;
 var xMoves = [];
 var oMoves = [];
+
+var xImageSrc ;
+var oImageSrc ;
 
 const checkWinCondition = function (moveArray) {
     const combos = [
@@ -35,24 +40,30 @@ $(document).ready(function () {
         if (!gameOver) {
             if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
                 turn == 'x' ? xMoves.push(parseInt(this.id)) : oMoves.push(parseInt(this.id));
-                $(this).attr("src", `./img/${turn}.png`);
+                (turn == 'x') && xImageSrc ? imgName = xImageSrc : imgName = turn;
+                (turn == 'o') && oImageSrc ? imgName = oImageSrc : imgName = turn;
+                $(this).attr("src", `./img/${imgName}.png`);
                 $(this).removeClass('whiteSquare');
                 turn = turnFlip[turn];
             } // else ignore click on already used position
             if (checkWinCondition(xMoves)) {
                 console.log("x wins");
-                alert("x's Game.");
-
+                $("#winDisplay").text("X Wins!");
+                xWins+=1;
                 gameOver = true;
+                $('#xWins').text(`X wins: ${xWins}`)
             } else if (checkWinCondition(oMoves)) {
-                alert("o's Game.");
-                console.log("o wins");
+                console.log("o wins");  
+                oWins+=1;
+                $("#winDisplay").text("O Wins!");
                 gameOver = true;
-
-            }
-            if (xMoves.length+oMoves.length ==9){
+                $('#oWins').text(`O wins: ${oWins}`)
+            } else if (xMoves.length+oMoves.length ==9){
                 gameOver=true;
-                alert("Cats Game.");
+                $("#winDisplay").text("Its a Draw!");
+                draws+=1;
+                $('#draws').text(`Draws: ${draws}`)
+
             }
         }
     });
@@ -65,7 +76,26 @@ $(document).ready(function () {
         xMoves = [];
         oMoves = [];
         gameOver = false;
- 
+        $("#winDisplay").text("");
+    })
+
+    $("#xImageUploadBtn").on('click', function(){
+        if ($("#imageUpload")[0].value){
+            console.log("image detected");
+            xImageSrc = $("#imageUpload")[0].value
+
+        } else {
+            console.log("no image uploaded");
+        }
+    })
+    $("#oImageUploadBtn").on('click', function(){
+        if ($("#imageUpload")[0].value){
+            console.log("image detected");
+            oImageSrc = $("#imageUpload")[0].value
+        } else {
+            console.log("no image uploaded");
+        }
     })
 
 });
+
