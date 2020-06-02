@@ -47,3 +47,8 @@ div.box img{
     width: 80%;
     margin: 10%;
 }
+
+div.box img.whiteSquare{
+    width: 100%;
+    margin: 0;
+}

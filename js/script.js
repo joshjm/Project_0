@@ -36,6 +36,7 @@ $(document).ready(function () {
             if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
                 turn == 'x' ? xMoves.push(parseInt(this.id)) : oMoves.push(parseInt(this.id));
                 $(this).attr("src", `./img/${turn}.png`);
+                $(this).removeClass('whiteSquare');
                 turn = turnFlip[turn];
             } // else ignore click on already used position
             if (checkWinCondition(xMoves)) {
@@ -59,6 +60,7 @@ $(document).ready(function () {
     $("#reset").on('click', function () {
         // reset all images to whiteSquare
         $('img').attr('src', './img/whiteSquare.png');
+        $('img').addClass("whiteSquare");
         // reset Arrays
         xMoves = [];
         oMoves = [];
