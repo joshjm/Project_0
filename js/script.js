@@ -33,8 +33,12 @@ const checkWinCondition = function (moveArray) {
         }
     }
 }
-
+const updateTurn = function(){
+    $('#turn').text(turn);
+}
 $(document).ready(function () {
+    updateTurn()
+
     $('img').on('click', function (event) {
 
         if (!gameOver) {
@@ -66,6 +70,7 @@ $(document).ready(function () {
                 $('#draws').text(`Draws: ${draws}`)
 
             }
+            updateTurn()
         }
     });
 
@@ -78,6 +83,8 @@ $(document).ready(function () {
         oMoves = [];
         gameOver = false;
         $("#winDisplay").text("");
+        updateTurn()
+
     })
 
     $("#xImageUploadBtn").on('click', function () {
