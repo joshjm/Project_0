@@ -1,0 +1,17 @@
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+
+    <input type="file" id="file" accept="image/*">
+    <input type="button" id="submit" value="Upload" >
+    
+    <img src="">
+
+    <script>
+        $('#submit').on('click', function(){
+            let file = document.getElementById("file");
+            let src = URL.createObjectURL(file.files[0]);
+            $('img').attr('src', src);
+        })
+    </script>
