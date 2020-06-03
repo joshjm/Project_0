@@ -1,38 +1,58 @@
-var turn = 'x'; // hardcode starting as x. 
-var turnFlip = {
+let turn = 'x'; // hardcode starting as x. 
+const turnFlip = {
     'x': 'o',
     'o': 'x',
 } // this is pretty cheeky. Magic number-ish. I guess cyclers arent that bad though
-var gameOver = false;
-var xWins = 0;
-var oWins = 0;
-var draws = 0;
-var xMoves = [];
-var oMoves = [];
+let gameOver = false;
+let xWins = 0;
+let oWins = 0;
+let draws = 0;
+let xMoves = [];
+let oMoves = [];
 
-var oImageSrc = "./img/o.png";
-var xImageSrc = "./img/x.png";
+const initArray = function (rows, cols) {
+    let arr = []
+    for (let i = 0; i < rows; i++) {
+        arr[i] = new Array(cols);
+    }
+    return (arr);
+}
 
-const checkWinCondition = function (moveArray) {
-    const combos = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [1, 4, 7],
-        [2, 5, 8],
-        [3, 6, 9],
-        [1, 5, 9],
-        [3, 5, 7]
-    ];
-    for (let comboIndex = 0; comboIndex < combos.length; comboIndex++) {
-        let combo = combos[comboIndex];
-        let condition = combo.every((e) => moveArray.includes(e));
-        if (condition) {
-            console.log("game over");
-            return (true);
+let gameBoardArray = initArray(3, 3);
+
+let oImageSrc = "./img/o.png";
+let xImageSrc = "./img/x.png";
+
+const generalizedCheckWinCondition = function (array) {
+    for (let row = 0; row < array.length; row++) {
+        for (let col = 0; col < array[row].length; col++) {
+            let currentVal = array[row][col];
+            if (currentVal === 'x' || currentVal === 'o') {
+                if (row !== 0 && row !== array.length - 1) { // if not first or last row
+                    if ((currentVal === array[row - 1][col]) && (currentVal === array[row + 1][col])) { // vertical line
+                        return (currentVal);
+                    }
+                }
+                if ((col !== 0) && (col !== array[row].length - 1)) { // if not first or last col
+
+                    if ((currentVal === array[row][col - 1]) && (currentVal === array[row][col + 1])) { // horizontal line
+                        return (currentVal);
+                    }
+                }
+                if ((col !== 0 && col !== array[row].length - 1) && (row !== 0 && row !== array.length - 1)) { // if not on edges of array
+
+                    if ((currentVal === array[row - 1][col - 1]) && (currentVal === array[row + 1][col + 1]) || // left diag
+                        (currentVal === array[row - 1][col + 1]) && (currentVal === array[row + 1][col - 1])) { // right diag)
+                        return (currentVal);
+                    }
+                }
+            }
+
         }
     }
 }
+
+
 const updateTurn = function () {
     $('#turn').text(turn);
     localStorage.setItem("xWins", xWins);
@@ -43,10 +63,10 @@ const updateTurn = function () {
     $('#draws').text(`Draws: ${draws}`)
 }
 
-const resetScores = function(){
+const resetScores = function () {
     xWins = 0;
-    oWins = 0; 
-    draws = 0; 
+    oWins = 0;
+    draws = 0;
     updateTurn();
 }
 
@@ -56,23 +76,35 @@ $(document).ready(function () {
     draws = parseInt(localStorage.getItem('draws'));
     updateTurn()
 
-    $('img').on('click', function (event) {
+    $('div.box img').on('click', function (event) {
 
         if (!gameOver) {
             if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
-                turn == 'x' ? xMoves.push(parseInt(this.id)) : oMoves.push(parseInt(this.id));
+                let position = this.id.split('-');
+                let rowPosition = parseInt(position[0]);
+                let colPosition = parseInt(position[1]);
+
+                if (turn == 'x') {
+                    xMoves.push([rowPosition, colPosition]);
+                    gameBoardArray[rowPosition][colPosition] = 'x'
+                } else if (turn == 'o') {
+                    oMoves.push([rowPosition, colPosition]);
+                    gameBoardArray[rowPosition][colPosition] = 'o'
+                }
+
                 (turn == 'x') ? imgName = xImageSrc: imgName = oImageSrc;
                 $(this).attr("src", `${imgName}`);
                 $(this).removeClass('whiteSquare');
                 turn = turnFlip[turn];
             } // else ignore click on already used position
-            if (checkWinCondition(xMoves)) {
+            if (generalizedCheckWinCondition(gameBoardArray) === 'x') {
                 console.log("x wins");
                 $("#winDisplay").text("X Wins!");
                 xWins += 1;
                 gameOver = true;
                 updateTurn();
-            } else if (checkWinCondition(oMoves)) {
+
+            } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
                 console.log("o wins");
                 oWins += 1;
                 $("#winDisplay").text("O Wins!");
@@ -95,6 +127,8 @@ $(document).ready(function () {
         // reset Arrays
         xMoves = [];
         oMoves = [];
+        gameBoardArray = initArray(3, 3);
+
         gameOver = false;
         $("#winDisplay").text("");
         updateTurn()
@@ -120,5 +154,6 @@ $(document).ready(function () {
         }
 
     })
+
 
 });
