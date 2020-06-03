@@ -35,6 +35,7 @@ const checkWinCondition = function (moveArray) {
 }
 const updateTurn = function(){
     $('#turn').text(turn);
+    
 }
 $(document).ready(function () {
     updateTurn()
