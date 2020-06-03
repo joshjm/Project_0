@@ -10,6 +10,10 @@ let draws = 0;
 let xMoves = [];
 let oMoves = [];
 
+// default grid size
+let rows = 3;
+let cols = 3;
+
 const initArray = function (rows, cols) {
     let arr = []
     for (let i = 0; i < rows; i++) {
@@ -18,7 +22,7 @@ const initArray = function (rows, cols) {
     return (arr);
 }
 
-let gameBoardArray = initArray(3, 3);
+let gameBoardArray = initArray(rows, cols);
 
 let oImageSrc = "./img/o.png";
 let xImageSrc = "./img/x.png";
@@ -154,6 +158,14 @@ $(document).ready(function () {
         }
 
     })
+    $("#setGridSize").on('click', function () {
+        rows = parseInt($("#rowsInput")[0].value);
+        cols = parseInt($("#colsInput")[0].value);
+        // remove existing grid
 
+        //create new grid, and assign the classes and ids of each box
+
+        // put a white square img in each box with correct id
+    })
 
 });
