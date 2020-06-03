@@ -33,11 +33,27 @@ const checkWinCondition = function (moveArray) {
         }
     }
 }
-const updateTurn = function(){
+const updateTurn = function () {
     $('#turn').text(turn);
-    
+    localStorage.setItem("xWins", xWins);
+    localStorage.setItem("oWins", oWins);
+    localStorage.setItem("draws", draws);
+    $('#xWins').text(`X wins: ${xWins}`)
+    $('#oWins').text(`O wins: ${oWins}`)
+    $('#draws').text(`Draws: ${draws}`)
 }
+
+const resetScores = function(){
+    xWins = 0;
+    oWins = 0; 
+    draws = 0; 
+    updateTurn();
+}
+
 $(document).ready(function () {
+    xWins = parseInt(localStorage.getItem('xWins'));
+    oWins = parseInt(localStorage.getItem('oWins'));
+    draws = parseInt(localStorage.getItem('draws'));
     updateTurn()
 
     $('img').on('click', function (event) {
@@ -55,27 +71,24 @@ $(document).ready(function () {
                 $("#winDisplay").text("X Wins!");
                 xWins += 1;
                 gameOver = true;
-                $('#xWins').text(`X wins: ${xWins}`)
-
+                updateTurn();
             } else if (checkWinCondition(oMoves)) {
                 console.log("o wins");
                 oWins += 1;
                 $("#winDisplay").text("O Wins!");
                 gameOver = true;
-                $('#oWins').text(`O wins: ${oWins}`)
-
+                updateTurn();
             } else if (xMoves.length + oMoves.length == 9) {
                 gameOver = true;
                 $("#winDisplay").text("Its a Draw!");
                 draws += 1;
-                $('#draws').text(`Draws: ${draws}`)
-
+                updateTurn();
             }
             updateTurn()
         }
     });
 
-    $("#reset").on('click', function () {
+    $("#resetBoard").on('click', function () {
         // reset all images to whiteSquare
         $('img').attr('src', './img/whiteSquare.png');
         $('img').addClass("whiteSquare");
@@ -85,8 +98,9 @@ $(document).ready(function () {
         gameOver = false;
         $("#winDisplay").text("");
         updateTurn()
-
     })
+
+    $("#resetScores").on('click', resetScores)
 
     $("#xImageUploadBtn").on('click', function () {
         try {
