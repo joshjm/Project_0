@@ -73,6 +73,50 @@ const resetScores = function () {
     draws = 0;
     updateTurn();
 }
+const gridClick = function () {
+    console.log("image clicked");
+    if (!gameOver) {
+        if (!xMoves.includes(this.id) && !oMoves.includes(this.id)) { // if square empty
+            let position = this.id.split('-');
+            let rowPosition = parseInt(position[0]);
+            let colPosition = parseInt(position[1]);
+
+            if (turn == 'x') {
+                xMoves.push(this.id);
+                gameBoardArray[rowPosition][colPosition] = 'x'
+            } else if (turn == 'o') {
+                oMoves.push(this.id);
+                gameBoardArray[rowPosition][colPosition] = 'o'
+            }
+
+            (turn == 'x') ? imgName = xImageSrc: imgName = oImageSrc;
+            $(this).attr("src", `${imgName}`);
+            $(this).removeClass('whiteSquare');
+            turn = turnFlip[turn];
+        } // else ignore click on already used position
+        if (generalizedCheckWinCondition(gameBoardArray) === 'x') {
+            console.log("x wins");
+            $("#winDisplay").text("X Wins!");
+            xWins += 1;
+            gameOver = true;
+            updateTurn();
+
+        } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
+            console.log("o wins");
+            oWins += 1;
+            $("#winDisplay").text("O Wins!");
+            gameOver = true;
+            updateTurn();
+        } else if (xMoves.length + oMoves.length == rows*cols) {
+            gameOver = true;
+            $("#winDisplay").text("Its a Draw!");
+            draws += 1;
+            updateTurn();
+        }
+        updateTurn()
+    }
+}
+
 
 $(document).ready(function () {
     xWins = parseInt(localStorage.getItem('xWins'));
@@ -80,49 +124,14 @@ $(document).ready(function () {
     draws = parseInt(localStorage.getItem('draws'));
     updateTurn()
 
-    $('div.box img').on('click', function (event) {
-
-        if (!gameOver) {
-            if (!xMoves.includes(parseInt(this.id)) && !oMoves.includes(parseInt(this.id))) { // if square empty
-                let position = this.id.split('-');
-                let rowPosition = parseInt(position[0]);
-                let colPosition = parseInt(position[1]);
-
-                if (turn == 'x') {
-                    xMoves.push([rowPosition, colPosition]);
-                    gameBoardArray[rowPosition][colPosition] = 'x'
-                } else if (turn == 'o') {
-                    oMoves.push([rowPosition, colPosition]);
-                    gameBoardArray[rowPosition][colPosition] = 'o'
-                }
-
-                (turn == 'x') ? imgName = xImageSrc: imgName = oImageSrc;
-                $(this).attr("src", `${imgName}`);
-                $(this).removeClass('whiteSquare');
-                turn = turnFlip[turn];
-            } // else ignore click on already used position
-            if (generalizedCheckWinCondition(gameBoardArray) === 'x') {
-                console.log("x wins");
-                $("#winDisplay").text("X Wins!");
-                xWins += 1;
-                gameOver = true;
-                updateTurn();
-
-            } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
-                console.log("o wins");
-                oWins += 1;
-                $("#winDisplay").text("O Wins!");
-                gameOver = true;
-                updateTurn();
-            } else if (xMoves.length + oMoves.length == 9) {
-                gameOver = true;
-                $("#winDisplay").text("Its a Draw!");
-                draws += 1;
-                updateTurn();
-            }
-            updateTurn()
-        }
+    $("#game-board").css({
+        "display":"grid",
+        "grid-template-rows": "1fr 1fr 1fr",
+        "grid-template-columns": "1fr 1fr 1fr",
+        "margin": "10%"
     });
+
+    $('div.box img').on('click', gridClick); // create event listener for img click events
 
     $("#resetBoard").on('click', function () {
         // reset all images to whiteSquare
@@ -131,7 +140,7 @@ $(document).ready(function () {
         // reset Arrays
         xMoves = [];
         oMoves = [];
-        gameBoardArray = initArray(3, 3);
+        gameBoardArray = initArray(rows, cols);
 
         gameOver = false;
         $("#winDisplay").text("");
@@ -162,10 +171,42 @@ $(document).ready(function () {
         rows = parseInt($("#rowsInput")[0].value);
         cols = parseInt($("#colsInput")[0].value);
         // remove existing grid
-
+        $("#game-board").empty();        
         //create new grid, and assign the classes and ids of each box
+        let colString = "";
+        for (let i=0; i<cols; i++){
+            colString += " 1fr"
+        }
+        $("#game-board").css("grid-template-columns", colString);
 
-        // put a white square img in each box with correct id
+
+        for (let row =0; row < rows;row++){
+            for (let col =0; col < cols; col++){
+                let $newBlock = $("<div>").addClass("box");
+                $($newBlock).append($(`<img class="whiteSquare" src='./img/whiteSquare.png' id='${col}-${row}'>`));
+                if(row===0){
+                    $($newBlock).addClass('top');
+                } 
+                if(row===rows-1){
+                    $($newBlock).addClass('bottom');
+                } 
+                if(col===0){
+                    $($newBlock).addClass('left');
+                } 
+                if(col===cols-1){
+                    $($newBlock).addClass('right');
+                } 
+ 
+                $("#game-board").append($newBlock);
+            }   
+        }
+        // $("#game-board").css("grid-template-columns", "1fr 1fr 1fr 1fr");
+
+        // NOTE may need to generate the default board with jquery, as I will need to set the grid template rows and cols
+
+        // reattach img click event listener
+        $('div.box img').on('click', gridClick);
+        gameBoardArray = initArray(rows, cols);
     })
 
 });

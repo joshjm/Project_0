@@ -1,21 +1,18 @@
 .container{
     margin: auto;
     margin: 0 auto;
+    width: 60%;
     max-width: 800px;
 }
 
-#board{
-    width:100%;
-}
 
-.game-board {
+/* #game-board {
     display: grid;
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr 1fr;
     margin: 10%;
-}
+} */
 
-// for some css stylings
 body {
   display: flex;
   justify-content: center;
@@ -46,6 +43,7 @@ body {
 div.box img{
     width: 80%;
     margin: 10%;
+    /* max-height: ; */
 }
 
 div.box img.whiteSquare{
