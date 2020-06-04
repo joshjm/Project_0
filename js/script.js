@@ -1,19 +1,18 @@
-let turn = 'x'; // hardcode starting as x. 
-const turnFlip = {
-    'x': 'o',
-    'o': 'x',
-} // this is pretty cheeky. Magic number-ish. I guess cyclers arent that bad though
-let gameOver = false;
-let xWins = 0;
-let oWins = 0;
-let draws = 0;
-let xMoves = [];
-let oMoves = [];
+/**
+ * Tic Tac Toe game, designed by Joshua McDonald 
+ */
 
-// default grid size
-let rows = 3;
-let cols = 3;
+// Functions
 
+
+/**
+ * This function initializes an n by m array of empty values, which can then be later
+ * filled by moves played in the game. This array needs to be initialized to empty values
+ * rather than just dynamically created as the check win condition would throw errors 
+ * if it wasnt, due to references outside of the array. 
+ * @param {int} rows 
+ * @param {int} cols 
+ */
 const initArray = function (rows, cols) {
     xMoves = [];
     oMoves = [];
@@ -24,11 +23,24 @@ const initArray = function (rows, cols) {
     return (arr);
 }
 
-let gameBoardArray = initArray(rows, cols);
+/**
+ * pretty self explanatory, why are you reading this docstring. why am i writing this docstring...
+ */
+const turnFlip = {
+    'x': 'o',
+    'o': 'x',
+} 
 
-let oImageSrc = "./img/o.png";
-let xImageSrc = "./img/x.png";
 
+/**
+ * checks all positions in a n x m array for win condition.
+ * Array holds x's and o's in the positions that have been clicked on the game grid, 
+ * and checks to see if there are a chain of 3 matching moves around that position. 
+ * 
+ * Any value other than x's and o's can be used to fill the array, and it should also 
+ * be general enough to allow for a third player if you want to adapt it for that. 
+ * @param {array} array 
+ */
 const generalizedCheckWinCondition = function (array) {
     for (let row = 0; row < array.length; row++) {
         for (let col = 0; col < array[row].length; col++) {
@@ -57,8 +69,9 @@ const generalizedCheckWinCondition = function (array) {
         }
     }
 }
-
-
+/**
+ * Updates UI.
+ */
 const updateTurn = function () {
     $('#turn').text(turn);
     $('#turn').html(`<img src='./img/${turn}.png' style="height: 1.5rem;">`);
@@ -70,12 +83,19 @@ const updateTurn = function () {
     $('#draws').text(`Draws: ${draws}`)
 }
 
+/**
+ * Clears scores. needs to call updateTurn otherwise wont be saved to local storage. 
+ */
 const resetScores = function () {
     xWins = 0;
     oWins = 0;
     draws = 0;
     updateTurn();
 }
+
+/** 
+ * handler for turns being taken.
+ */
 const gridClick = function () {
     console.log("image clicked");
     if (!gameOver) {
@@ -120,6 +140,27 @@ const gridClick = function () {
         updateTurn()
     }
 }
+
+// Constants
+
+let turn = 'x'; // hardcode starting as x. 
+
+let gameOver = false;
+let xWins = 0;
+let oWins = 0;
+let draws = 0;
+let xMoves = [];
+let oMoves = [];
+
+
+let rows = 3; // default grid size
+let cols = 3;
+
+
+let gameBoardArray = initArray(rows, cols);
+
+let oImageSrc = "./img/o.png";
+let xImageSrc = "./img/x.png";
 
 
 $(document).ready(function () {
@@ -204,11 +245,6 @@ $(document).ready(function () {
                 $("#game-board").append($newBlock);
             }
         }
-        // $("#game-board").css("grid-template-columns", "1fr 1fr 1fr 1fr");
-
-        // NOTE may need to generate the default board with jquery, as I will need to set the grid template rows and cols
-
-        // reattach img click event listener
         $('div.box img').on('click', gridClick);
         gameBoardArray = initArray(rows, cols);
     })
