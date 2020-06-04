@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css/dist/dark.min.css" />
 
     <!-- My Styles -->
-    
+
     <link rel="stylesheet" href="css/style.css">
     <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -67,25 +67,33 @@
         </div>
 
         <footer>
-            <h2 id="winDisplay"></h2>
-            <button id="resetBoard">Reset Board </button>
-            <button id="resetScores">Reset Scores</button>
-            <p class="status" id="xWins">X wins: </p>
-            <p class="status" id="oWins">O wins: </p>
-            <p class="status" id="draws">Draws: </p>
-            <br>
+            <div class="displayGrid3">
+                <p class="status" id="xWins">X wins: </p>
+                <p class="status" id="oWins">O wins: </p>
+                <p class="status" id="draws">Draws: </p>
+            </div>
 
-            <input id="file" type="file" accept="image/*" >
-            <input type="button" id="oImageUploadBtn" value="Set O image">
-            <input type="button" id="xImageUploadBtn" value="Set X image">
-            <br>
-            <p>Set grid size: </p> 
-            <br>
-            <div class="inputs">
+            <h2 id="winDisplay"></h2>
+            <div class="displayGrid2">
+                <button id="resetBoard">Reset Board </button>
+                <button id="resetScores">Reset Scores</button>
+            </div>
+
+            <h2>Set New Player Icon</h2>
+            <div class="container">
+                <input id="file" type="file" accept="image/*">
+            </div>
+            <div class="displayGrid2">
+                <input type="button" id="oImageUploadBtn" value="Set O image">
+                <input type="button" id="xImageUploadBtn" value="Set X image">
+            </div>
+            <h2>Set grid size: </h2>
+            <div class="displayGrid3">
                 <input id='rowsInput' type="text" placeholder="y">
                 <input id='colsInput' type="text" placeholder="x">
+                <input type="button" value="Set" id='setGridSize'>
             </div>
-            <input type="button" value="Set" id='setGridSize'>
+
 
         </footer>
 

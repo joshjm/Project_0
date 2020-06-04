@@ -61,6 +61,7 @@ const generalizedCheckWinCondition = function (array) {
 
 const updateTurn = function () {
     $('#turn').text(turn);
+    $('#turn').html(`<img src='./img/${turn}.png' style="height: 1.5rem;">`);
     localStorage.setItem("xWins", xWins);
     localStorage.setItem("oWins", oWins);
     localStorage.setItem("draws", draws);

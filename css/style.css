@@ -53,3 +53,19 @@ footer{
 .turnIndicator{
     text-align: center;
 }
+
+div.displayGrid3{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 10%;
+}
+div.displayGrid2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 10%;
+}
+
+#rowsInput, #colsInput{
+    width: 70%;
+    
+}
