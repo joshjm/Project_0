@@ -123,18 +123,21 @@ const gridClick = function () {
             xWins += 1;
             gameOver = true;
             updateTurn();
+            confetti();
 
         } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
             console.log("o wins");
             oWins += 1;
             $("#winDisplay").text("O Wins!");
             gameOver = true;
+            confetti();
             updateTurn();
 
         } else if (xMoves.length + oMoves.length == rows * cols) {
             gameOver = true;
             $("#winDisplay").text("Its a Draw!");
             draws += 1;
+            confetti();
             updateTurn();
         }
         updateTurn()
