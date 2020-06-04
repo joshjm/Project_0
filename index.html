@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe</title>
     <!-- CSS -->
+    <link rel="stylesheet" href="css/normalize.css">
+
     <!-- water CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kognise/water.css/dist/dark.min.css" />
 
     <!-- My Styles -->
-    <link rel="stylesheet" href="css/normalize.css">
+    
     <link rel="stylesheet" href="css/style.css">
     <!-- SCRIPTS -->
     <!-- JQuery -->
@@ -18,6 +21,7 @@
 
     <!-- My Scripts -->
     <script src="./js/script.js"></script>
+
 </head>
 
 <body>
@@ -77,8 +81,10 @@
             <br>
             <p>Set grid size: </p> 
             <br>
-            <input id='colsInput' type="text" placeholder="x">
-            <input id='rowsInput' type="text" placeholder="y">
+            <div class="inputs">
+                <input id='rowsInput' type="text" placeholder="y">
+                <input id='colsInput' type="text" placeholder="x">
+            </div>
             <input type="button" value="Set" id='setGridSize'>
 
         </footer>

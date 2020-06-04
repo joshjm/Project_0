@@ -15,6 +15,8 @@ let rows = 3;
 let cols = 3;
 
 const initArray = function (rows, cols) {
+    xMoves = [];
+    oMoves = [];
     let arr = []
     for (let i = 0; i < rows; i++) {
         arr[i] = new Array(cols);
@@ -107,7 +109,8 @@ const gridClick = function () {
             $("#winDisplay").text("O Wins!");
             gameOver = true;
             updateTurn();
-        } else if (xMoves.length + oMoves.length == rows*cols) {
+
+        } else if (xMoves.length + oMoves.length == rows * cols) {
             gameOver = true;
             $("#winDisplay").text("Its a Draw!");
             draws += 1;
@@ -125,7 +128,7 @@ $(document).ready(function () {
     updateTurn()
 
     $("#game-board").css({
-        "display":"grid",
+        "display": "grid",
         "grid-template-rows": "1fr 1fr 1fr",
         "grid-template-columns": "1fr 1fr 1fr",
         "margin": "10%"
@@ -171,34 +174,34 @@ $(document).ready(function () {
         rows = parseInt($("#rowsInput")[0].value);
         cols = parseInt($("#colsInput")[0].value);
         // remove existing grid
-        $("#game-board").empty();        
+        $("#game-board").empty();
         //create new grid, and assign the classes and ids of each box
         let colString = "";
-        for (let i=0; i<cols; i++){
+        for (let i = 0; i < cols; i++) {
             colString += " 1fr"
         }
         $("#game-board").css("grid-template-columns", colString);
 
 
-        for (let row =0; row < rows;row++){
-            for (let col =0; col < cols; col++){
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
                 let $newBlock = $("<div>").addClass("box");
                 $($newBlock).append($(`<img class="whiteSquare" src='./img/whiteSquare.png' id='${row}-${col}'>`));
-                if(row===0){
+                if (row === 0) {
                     $($newBlock).addClass('top');
-                } 
-                if(row===rows-1){
+                }
+                if (row === rows - 1) {
                     $($newBlock).addClass('bottom');
-                } 
-                if(col===0){
+                }
+                if (col === 0) {
                     $($newBlock).addClass('left');
-                } 
-                if(col===cols-1){
+                }
+                if (col === cols - 1) {
                     $($newBlock).addClass('right');
-                } 
- 
+                }
+
                 $("#game-board").append($newBlock);
-            }   
+            }
         }
         // $("#game-board").css("grid-template-columns", "1fr 1fr 1fr 1fr");
 
