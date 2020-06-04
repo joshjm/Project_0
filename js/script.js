@@ -183,7 +183,7 @@ $(document).ready(function () {
         for (let row =0; row < rows;row++){
             for (let col =0; col < cols; col++){
                 let $newBlock = $("<div>").addClass("box");
-                $($newBlock).append($(`<img class="whiteSquare" src='./img/whiteSquare.png' id='${col}-${row}'>`));
+                $($newBlock).append($(`<img class="whiteSquare" src='./img/whiteSquare.png' id='${row}-${col}'>`));
                 if(row===0){
                     $($newBlock).addClass('top');
                 } 
