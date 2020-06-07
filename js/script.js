@@ -68,6 +68,10 @@ const generalizedCheckWinCondition = function (array) {
 
         }
     }
+    if (xMoves.length + oMoves.length == array.length * array[0].length){
+        console.log("its a draw");
+        return("draw");
+    }
 }
 /**
  * Updates UI.
@@ -117,7 +121,10 @@ const gridClick = function () {
             $(this).removeClass('whiteSquare');
             turn = turnFlip[turn];
         } // else ignore click on already used position
-        if (generalizedCheckWinCondition(gameBoardArray) === 'x') {
+        let status = generalizedCheckWinCondition(gameBoardArray);
+        console.log(status);
+        // TODO change this to a switch
+        if (status === 'x') {
             console.log("x wins");
             $("#winDisplay").text("X Wins!");
             xWins += 1;
@@ -125,7 +132,7 @@ const gridClick = function () {
             updateTurn();
             confetti();
 
-        } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
+        } else if (status === 'o') {
             console.log("o wins");
             oWins += 1;
             $("#winDisplay").text("O Wins!");
@@ -133,7 +140,7 @@ const gridClick = function () {
             confetti();
             updateTurn();
 
-        } else if (xMoves.length + oMoves.length == rows * cols) {
+        } else if (status === 'draw') {
             gameOver = true;
             $("#winDisplay").text("Its a Draw!");
             draws += 1;
