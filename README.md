@@ -12,3 +12,6 @@ This games lets you play a game of tic tac toe and;
 * Clear scores from memory.
 
 Most updating of UI is done via JQuery, player icons images are updated using `URL.createObjectURL`. Some CSS styling is given by [water.css](https://watercss.kognise.dev/). 
+
+# AI
+This game implements the **Minimax** algorithm, and is generalized to work with any grid size, and run on any turn. 
