@@ -42,9 +42,12 @@ const turnFlip = {
  * @param {array} array 
  */
 const generalizedCheckWinCondition = function (array) {
+    let nullCounter = 0;
     for (let row = 0; row < array.length; row++) {
         for (let col = 0; col < array[row].length; col++) {
+            
             let currentVal = array[row][col];
+            currentVal == null ? nullCounter++ : null ;
             if (currentVal === 'x' || currentVal === 'o') {
                 if (row !== 0 && row !== array.length - 1) { // if not first or last row
                     if ((currentVal === array[row - 1][col]) && (currentVal === array[row + 1][col])) { // vertical line
@@ -65,8 +68,10 @@ const generalizedCheckWinCondition = function (array) {
                     }
                 }
             }
-
         }
+    }
+    if (nullCounter == 0){
+        return("draw");
     }
 }
 /**
@@ -97,7 +102,6 @@ const resetScores = function () {
  * handler for turns being taken.
  */
 const gridClick = function () {
-    console.log("image clicked");
     if (!gameOver) {
         if (!xMoves.includes(this.id) && !oMoves.includes(this.id)) { // if square empty
             let position = this.id.split('-');
@@ -118,7 +122,6 @@ const gridClick = function () {
             turn = turnFlip[turn];
         } // else ignore click on already used position
         if (generalizedCheckWinCondition(gameBoardArray) === 'x') {
-            console.log("x wins");
             $("#winDisplay").text("X Wins!");
             xWins += 1;
             gameOver = true;
@@ -126,7 +129,6 @@ const gridClick = function () {
             confetti();
 
         } else if (generalizedCheckWinCondition(gameBoardArray) === 'o') {
-            console.log("o wins");
             oWins += 1;
             $("#winDisplay").text("O Wins!");
             gameOver = true;
@@ -137,7 +139,6 @@ const gridClick = function () {
             gameOver = true;
             $("#winDisplay").text("Its a Draw!");
             draws += 1;
-            confetti();
             updateTurn();
         }
         updateTurn()
