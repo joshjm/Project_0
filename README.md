@@ -15,3 +15,13 @@ Most updating of UI is done via JQuery, player icons images are updated using `U
 
 # AI
 This game implements the **Minimax** algorithm, and is generalized to work with any grid size, and run on any turn. 
+
+Minimax basically lays out a tree of all the possible future moves of the board. When a game over state is reached  (a draw or a win), the board is given a score (-1, 0 or 1) depending on whether it was the player at the top of the tree who won. ie, if the peson running the algorithm wins. 
+
+Depending on each turn of the game (ie the level of the tree) the scores of sibling branches are chosen between as a move choice by either taking the minimum score (if it was not the player at the top of the trees turn) or by taking the maximum score. 
+
+These scores are propagated back up the tree, with alternating minimizing or maximizing depending on whos turn it was at that branch. 
+
+Ultimatly this should lead back to first branch point, and allow a decision to be made about what the next move of the game should be. 
+
+This allows you to rank all the possible next moves against each other, and pick and optimal move. 
